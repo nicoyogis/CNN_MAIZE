@@ -19,10 +19,10 @@ def predict():
     if request.method == 'POST':
         target = os.path.join(APP_ROOT, 'static/images/')
         f = request.files['file']
-        f.save(secure_filename(f.filename))
-        test_image=image.load_img(f.filename,target_size=(64,64))
-        test_image=image.img_to_array(test_image)
-        test_image=np.expand_dims(test_image,axis=0)
+        data = os.path.join(target, "query.jpg")
+        test_image = image.load_img(f.filename, target_size=(150, 150))
+        test_image = image.img_to_array(test_image)
+        test_image = np.expand_dims(test_image, axis=0)
         with graph.as_default():
             y = model.predict_classes(test_image)
         d={0:'CercosporaleafspotGrayleafspot',1:'Commonrust',2:'NorthernLeafBlight',3:'healthy'}
