@@ -7,6 +7,7 @@ from werkzeug import secure_filename
 
 model=load_model('model.h5')
 app = Flask(__name__)
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 @app.route('/')
 def home():
@@ -16,8 +17,10 @@ def home():
 @app.route('/predict',methods=['POST','GET'])
 def predict():
     if request.method == 'POST':
+        target = os.path.join(APP_ROOT, 'static/images/')
         f = request.files['file']
-        f.save(secure_filename(f.filename))
+        data = os.path.join(target, "query.jpg")
+        filename.save(data)
         test_image=image.load_img(f.filename,target_size=(64,64))
         test_image=image.img_to_array(test_image)
         test_image=np.expand_dims(test_image,axis=0)
