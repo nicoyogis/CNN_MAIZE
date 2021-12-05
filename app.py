@@ -8,7 +8,6 @@ from werkzeug import secure_filename
 model=load_model('model.h5')
 app = Flask(__name__)
 
-graph = tf.get_default_graph()
 @app.route('/')
 def home():
     return render_template('index.html')
