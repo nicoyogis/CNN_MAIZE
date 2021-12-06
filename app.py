@@ -1,39 +1,46 @@
-from flask import Flask, request, jsonify, render_template
-from keras.models import load_model
-import os
+from flask import Flask, render_template, request
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 import numpy as np
-import tensorflow as tf
-from keras.preprocessing import image
-from werkzeug import secure_filename
 
-model=load_model('model.h5')
+
 app = Flask(__name__)
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-@app.route('/')
-def home():
+
+model_path= 'model2.h5'
+model = load_model(model_path)
+
+
+
+dic = {0: 'cercospora', 1: 'commonrust', 2: 'normal', 3:'northernleaf'}
+
+
+def predict_label(img_path, model):
+    img = image.load_img(img_path, target_size=(150, 150))
+    i = image.img_to_array(img)
+    i = i / 255
+    i = np.expand_dims(i, axis=0)
+    preds = np.argmax(model.predict(i), axis=1)
+    return dic[preds[0]]
+
+
+@app.route('/', methods=['GET'])
+def main():
     return render_template('index.html')
-  
 
-@app.route('/predict',methods=['POST','GET'])
-def predict():
+
+@app.route('/submit', methods=['GET', 'POST'])
+def upload():
     if request.method == 'POST':
-        target = os.path.join(APP_ROOT, 'static/images/')
-        filename = request.files['file']
-        data = os.path.join(target, "query.jpg")
-        filename.save(data)
-        test_image = image.load_img(f.filename, target_size=(150, 150))
-        test_image = image.img_to_array(test_image)
-        test_image = np.expand_dims(test_image, axis=0)
-        with graph.as_default():
-            y = model.predict_classes(test_image)
-        d={0:'CercosporaleafspotGrayleafspot',1:'Commonrust',2:'NorthernLeafBlight',3:'healthy'}
-        dc={0: 'Corn (maize)', 1: 'Corn (maize)', 2: 'Corn (maize)',3: 'Corn (maize)'}
-        crop=dc[y[0]]
-        dis=d[y[0]]
-    return render_template("prediction.html",result = {'Crop':crop,'Disease':dis})
-if __name__ == "__main__":
-    app.run(debug=False)
+        f = request.files['my_image']
+
+        img_path = "static/" + f.filename
+        f.save(img_path)
+
+        pred = predict_label(img_path, model)
+        # return pred
+        return render_template("index.html", prediction=pred, img_path=img_path)
 
 
-
+if __name__ == '__main__':
+    app.run(debug=True)
