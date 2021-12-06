@@ -2,13 +2,15 @@ from flask import Flask, render_template, request
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
+import os
 
 
 app = Flask(__name__)
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-
-#model_path= 'model2.h5'
-model = load_model('model2.h5')
+target = os.path.join(APP_ROOT, 'model/')
+data = os.path.join(target, "model2.h5")
+model = load_model(data)
 
 
 
@@ -16,7 +18,6 @@ dic = {0: 'cercospora', 1: 'commonrust', 2: 'normal', 3:'northernleaf'}
 
 
 def predict_label(img_path, model):
-    model = load_model('model2.h5')
     img = image.load_img(img_path, target_size=(150, 150))
     i = image.img_to_array(img)
     i = i / 255
