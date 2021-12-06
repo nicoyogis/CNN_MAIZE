@@ -16,6 +16,7 @@ dic = {0: 'cercospora', 1: 'commonrust', 2: 'normal', 3:'northernleaf'}
 
 
 def predict_label(img_path, model):
+    model = load_model('model2.h5')
     img = image.load_img(img_path, target_size=(150, 150))
     i = image.img_to_array(img)
     i = i / 255
