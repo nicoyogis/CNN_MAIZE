@@ -7,8 +7,8 @@ import numpy as np
 app = Flask(__name__)
 
 
-model_path= 'model2.h5'
-model = load_model(model_path)
+#model_path= 'model2.h5'
+model = load_model('model2.h5')
 
 
 
