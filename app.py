@@ -19,7 +19,7 @@ def home():
 def predict():
     if request.method == 'POST':
         target = os.path.join(APP_ROOT, 'static/images/')
-        f = request.files['file']
+        filename = request.files['file']
         data = os.path.join(target, "query.jpg")
         filename.save(data)
         test_image = image.load_img(f.filename, target_size=(150, 150))
