@@ -21,6 +21,7 @@ def predict():
         target = os.path.join(APP_ROOT, 'static/images/')
         f = request.files['file']
         data = os.path.join(target, "query.jpg")
+        filename.save(data)
         test_image = image.load_img(f.filename, target_size=(150, 150))
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis=0)
