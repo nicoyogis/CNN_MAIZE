@@ -27,7 +27,9 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     chosen_model = request.form['select_model']
-    model_dict = {'hyperModel'   :   'static/MLModule/model3.h5'}
+    model_dict = {'proposedModel'   :   'static/MLModule/model3.h5',
+                  'vgg16Model'   :   'static/MLModule/vgg16.h5',
+                  'vgg19Model'   :   'static/MLModule/vgg19.h5'}
     if chosen_model in model_dict:
         model = load_model(model_dict[chosen_model]) 
     else:
@@ -45,7 +47,7 @@ def predict():
     return predict_result(chosen_model, runtimes, respon_model, 'temp.png')
 
 def predict_result(model, run_time, probs, img):
-    class_list = {0: 'cercospora', 1: 'commonrust', 2: 'normal', 3: 'northernleaf'}
+    class_list = {0: 'Effusion', 1: 'Normal', 2: 'Tube'}
     idx_pred = probs.index(max(probs))
     labels = list(class_list.keys())
     return render_template('/result_select.html', labels=labels,

@@ -12,7 +12,7 @@
 <section class="contact-section" style="padding-top:50px;" id="predict1">
     <div class="container">
         <div class="title-box centred">
-            <div class="sec-title">Prediksi Penyakit Daun Jagung</div>
+            <div class="sec-title">Prediksi Gendang Telinga</div>
         </div>
         <form class="login100-form validate-form" action="/predict" method=post enctype=multipart/form-data>
             <div class="row" style=" width: 35%; margin: auto; padding: 15px;">
@@ -24,7 +24,9 @@
                 <div class="column">
                     <div class="form-check form-check-inline">
                         <select name="select_model" id="selected_model">
-                            <option value='hyperModel'>Model Manual</option>
+                            <option value='proposedModel'>Proposed Model</option>
+							<option value='vgg19Model'>VGG19 Model</option>
+							<option value='vgg16Model'>VGG16 Model</option>
                         </select>
                     </div>
                 </div>
