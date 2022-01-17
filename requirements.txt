@@ -14,7 +14,7 @@ opencv-contrib-python-headless==4.5.4.58
 Pillow==8.4.0
 scikit-image==0.18.3
 scipy==1.7.1
-six==1.16.0
+six==1.15.0
 tensorflow-cpu==2.5.0
 Werkzeug==2.0.2
 gunicorn==20.1.0
