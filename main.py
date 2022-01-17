@@ -27,9 +27,10 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     chosen_model = request.form['select_model']
-    model_dict = {'proposedModel1'   :   'static/MLModule/modelke1.h5',
-                  'proposedModel2'   :   'static/MLModule/modelke2.h5',
-                  'proposedModel3'   :   'static/MLModule/modelke3.h5'}
+    model_dict = {'proposedModel1'   :   'static/MLModule/93_model.h5',
+                  'proposedModel2'   :   'static/MLModule/95_model.h5',
+                  'proposedModel3'   :   'static/MLModule/96_model.h5',
+                  'crossval': 'static/MLModule/crossval_model.h5'}
     if chosen_model in model_dict:
         model = load_model(model_dict[chosen_model]) 
     else:
@@ -47,7 +48,7 @@ def predict():
     return predict_result(chosen_model, runtimes, respon_model, 'temp.png')
 
 def predict_result(model, run_time, probs, img):
-    class_list = {0: 'cercospora', 1: 'commonrust', 2: 'normal', 3: 'northernleaf'}
+    class_list = {'cercospora': 0,'commonrust': 1,'normal': 2,'northernleaf': 3}
     idx_pred = probs.index(max(probs))
     labels = list(class_list.keys())
     return render_template('/result_select.html', labels=labels,
@@ -55,4 +56,4 @@ def predict_result(model, run_time, probs, img):
                             run_time=run_time, img=img)
 
 if __name__ == "__main__": 
-        app.run(debug=True, host='0.0.0.0', port=2000)
+        app.run(debug=True, host='0.0.0.0', port=3000)
